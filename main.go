@@ -14,7 +14,7 @@ func main() {
 	fmt.Println("Running...")
 
 	http.HandleFunc("/", HomeEndpoint)
-	if err := http.ListenAndServe(":3000", nil); err != nil {
+	if err := http.ListenAndServe(":3666", nil); err != nil {
 		log.Fatal(err)
 	}
 }

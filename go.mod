@@ -2,6 +2,7 @@ module github.com/josuepr2/aws-tutorial
 
 require (
 	github.com/Bowery/prompt v0.0.0-20180817134258-8a1d5376df1c // indirect
+	github.com/aws/aws-sdk-go v1.15.90
 	github.com/dchest/safefile v0.0.0-20151022103144-855e8d98f185 // indirect
 	github.com/google/shlex v0.0.0-20181106134648-c34317bd91bf // indirect
 	github.com/kardianos/govendor v1.0.9 // indirect
