@@ -1,11 +1,10 @@
 version: '2'
 services:
-  my-golang-app-run:
-    container_name: aws-tutorial-app
+  aws-tutorial:
+    container_name: aws-tutorial
     build: .
     volumes:
-      - .:/go/src/app
-    working_dir: /go/src/app
+      - .:/app
     ports:
       - "3666:3666"
     
