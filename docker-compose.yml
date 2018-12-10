@@ -1,7 +1,8 @@
 version: '2'
 services:
   aws-tutorial:
-    container_name: aws-tutorial
+    container_name: aws-main-container
+    restart: always
     build: .
     volumes:
       - .:/app
