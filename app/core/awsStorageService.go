@@ -12,7 +12,7 @@ type S3Instance struct{
 	Connection *s3.S3
 }
 
-func NewS3Connection() (*s3.S3, error){
+func NewS3Connection() (*S3Instance, error){
 
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("us-west-2")},
@@ -24,13 +24,16 @@ func NewS3Connection() (*s3.S3, error){
 	}
 
 	// Create S3 service client
+	var svcInstance S3Instance
 	svc := s3.New(sess)
-	return svc, nil
+	svcInstance.Connection = svc
+
+	return &svcInstance, nil
 }
 
-func (s3 *S3Instance)ListS3Buckets(){
+func (s *S3Instance)ListS3Buckets(){
 
-	result, err := s3.Connection.ListBuckets(nil)
+	result, err := s.Connection.ListBuckets(nil)
 	if err != nil {
 		exitErrorf("Unable to list buckets, %v", err)
 	}
