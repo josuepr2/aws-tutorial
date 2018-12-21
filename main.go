@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/json"
+	//"encoding/json"
 	"fmt"
+	"github.com/josuepr2/aws-tutorial/app/core"
 	"log"
 	"net/http"
-	"github.com/josuepr2/aws-tutorial/app/core"
 )
 
 func HomeEndpoint(w http.ResponseWriter, r *http.Request) {
@@ -23,9 +25,14 @@ func main() {
 	http.HandleFunc("/", HomeEndpoint)
 	http.HandleFunc("/s3-list", func(w http.ResponseWriter, r *http.Request){
 
-		s3ClientConn.ListS3Buckets()
+		res, listErr := s3ClientConn.ListS3Buckets()
 
-		fmt.Fprintln(w, "Listing ")
+		if listErr != nil {
+			w.Write([]byte("Error listing buckets"))
+		} else {
+			w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+			json.NewEncoder(w).Encode(&res)
+		}
 	})
 
 

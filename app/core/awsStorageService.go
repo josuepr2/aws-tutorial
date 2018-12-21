@@ -12,6 +12,8 @@ type S3Instance struct{
 	Connection *s3.S3
 }
 
+type bucketList struct{}
+
 func NewS3Connection() (*S3Instance, error){
 
 	sess, err := session.NewSession(&aws.Config{
@@ -31,11 +33,14 @@ func NewS3Connection() (*S3Instance, error){
 	return &svcInstance, nil
 }
 
-func (s *S3Instance)ListS3Buckets(){
+func (s *S3Instance)ListS3Buckets() ([]string,error){
+
+	var bucketList []string
 
 	result, err := s.Connection.ListBuckets(nil)
 	if err != nil {
 		exitErrorf("Unable to list buckets, %v", err)
+		return nil, err
 	}
 
 	fmt.Println("Buckets:")
@@ -43,7 +48,10 @@ func (s *S3Instance)ListS3Buckets(){
 	for _, b := range result.Buckets {
 		fmt.Printf("* %s created on %s\n",
 			aws.StringValue(b.Name), aws.TimeValue(b.CreationDate))
+			bucketList = append(bucketList, aws.StringValue(b.Name))
 	}
+
+	return bucketList, nil
 }
 
 func exitErrorf(msg string, args ...interface{}) {
